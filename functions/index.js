@@ -19,6 +19,11 @@ exports.sendWaitlistEmail = functions.https.onRequest((request, response) => {
 
     const { email, firstName } = request.body;
 
+    if (!email || !firstName) {
+      return response.status(404).send({ message: 'Email or FirstName missing', code: 'params-missing', error: true })
+    }
+
+
     const data = {
       from: "Showmelove <team@showmelove.co>",
       to: `${firstName} ${email}`,
