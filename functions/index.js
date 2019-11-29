@@ -34,10 +34,10 @@ exports.sendWaitlistEmail = functions.https.onRequest((request, response) => {
         .set({ email, firstName });
       const result = await mg.messages.create(DOMAIN, data);
       console.log(">>> Waitlist Email Sent: ", result);
-      return response.status(200).send("Message Sent Successfully");
+      return response.status(200).send({ message: 'Message Sent Successfully', code: 'email-success', error: false, data: {} });
     } catch (error) {
       console.log(">>> Error In Sending Waitlist Email: ", error);
-      return response.status(500).send("Error Occurred");
+      return response.status(500).send({ message: 'Error Occurred', code: 'internal-error', error: true });
     }
   });
 });
